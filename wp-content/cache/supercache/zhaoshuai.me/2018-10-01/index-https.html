@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>【WordPress】博客+七牛云+CDN+SSL证书 - 碎念</title>
+<meta name="keywords" content="Wordpress"/>
+<meta name="description" content="1、写在前面
+随着博客的积累，上传的图片和其他文件会占用服务器很多空间。博客的响应速度可能就会变慢，而我们可以将这些静态资源放在“CDN云存储服务器”上面，CDN 加速优点是成本低，速度快，适合访问量比较大的网站。这样既可以实现网"/>
+    <link rel="stylesheet" href="https://qiniu.zhaoshuai.me/wp-content/themes/cu/style.css" media="screen" type="text/css"/>
+    <link rel="shortcut icon" href="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/favicon.ico" type="image/x-icon"/>
+    <link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//qiniu.zhaoshuai.me' />
+<meta name='description' content='1、写在前面 随着博客的积累，上传的图片和其他文件会占用服务器很多空间。博客的响应速度可能就会变慢，而我们可以将这些静态资源放在“CDN云存储服务器”上面，CDN 加速优点是成本低，速度快，适合访问量比较大的网站。这样既可以实现网站的瘦身，也能够 ...' />
+<meta name='robots' content='index,follow' />
+    
+    
+<style type='text/css'>img#wpstats{display:none}</style>    <script type="text/javascript" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/js/jquery.js"></script>
+</head>
+<body>
+<header class="mod-head">
+    <h1 class="mod-head__title"><a href="https://zhaoshuai.me">碎念</a></h1>
+    <div class="mod-head__logo">
+        <a href="https://zhaoshuai.me">
+            <img class="avatar" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/avatar.png" alt="" width="30"
+                 height="30">
+        </a>
+                    <div class="zjgx">1</div>
+            </div>
+    <nav class="mod-head__nav">
+        <ul id="menu-%e5%af%bc%e8%88%aa%e8%8f%9c%e5%8d%95" class="mod-head__ul"><li id="menu-item-13" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-13"><a href="https://zhaoshuai.me/">Index</a><span>·</span></li>
+<li id="menu-item-309" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-309"><a href="https://zhaoshuai.me/articles/">Articles</a><span>·</span></li>
+<li id="menu-item-25" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="https://zhaoshuai.me/tags/">Tags</a><span>·</span></li>
+<li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a href="https://zhaoshuai.me/about/">About</a><span>·</span></li>
+<li id="menu-item-184" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-184"><a href="https://zhaoshuai.me/chat/">Chat</a><span>·</span></li>
+<li id="menu-item-35" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-35"><a href="https://zhaoshuai.me/friendlinks/">FriendLinks</a><span>·</span></li>
+<li id="menu-item-230" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-230"><a href="https://zhaoshuai.me/job-position/">Job Position</a></li>
+</ul>    </nav>
+    <a id="right-panel-link" href="#right-panel"></a>
+    <div id="right-panel" class="panel">
+        <h3 class="rightnavh3">Menu</h3>
+        <ul id="menu-%e5%af%bc%e8%88%aa%e8%8f%9c%e5%8d%95-1" class="ymod-head"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-13"><a href="https://zhaoshuai.me/">Index</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-309"><a href="https://zhaoshuai.me/articles/">Articles</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-25"><a href="https://zhaoshuai.me/tags/">Tags</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a href="https://zhaoshuai.me/about/">About</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-184"><a href="https://zhaoshuai.me/chat/">Chat</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-35"><a href="https://zhaoshuai.me/friendlinks/">FriendLinks</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-230"><a href="https://zhaoshuai.me/job-position/">Job Position</a></li>
+</ul>        <button id="close-panel-bt">X Close</button>
+    </div>
+    <script src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/js/slider.js"></script>
+    <script>$('#right-panel-link').panelslider({side: 'right', duration: 200});
+        $('#close-panel-bt').click(function () {
+            $.panelslider.close();
+        });</script>
+</header>    <style>
+        .single-header {
+            line-height: 20px;
+            margin-top: -45px;
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .single-header-bar {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 30px;
+            margin-top: 10px;
+        }
+
+        .single-header-bar img {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .single-header-span {
+            vertical-align: top;
+            display: inline-block;
+        }
+    </style>
+    <article class="mod-post mod-post__type-post">
+        <header>
+            <h1 class="mod-post__title">【WordPress】博客+七牛云+CDN+SSL证书</h1>
+        </header>
+
+        <div class="single-header">
+            <div class="single-header-bar">
+                <img class="single" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/author.png">
+                <span class="single-header-span">
+                    zhaoshuai                </span>
+            </div>
+
+            <div class="single-header-bar">
+                <img class="single" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/calendar.png">
+                <span class="single-header-span">
+                    2018年10月06日                </span>
+            </div>
+
+            <div class="single-header-bar">
+                <img class="single" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/comment.png">
+                <span class="single-header-span">
+                    2                </span>
+            </div>
+
+            <div class="single-header-bar">
+                <img class="single" src="https://qiniu.zhaoshuai.me/wp-content/themes/cu/images/comment.png">
+                <span class="single-header-span">
+                                    </span>
+            </div>
+        </div>
+
+        <div>
+                            <div class="mod-post__entry wzulli"><h2><span style="font-family: terminal, monaco, monospace;">1、写在前面</span></h2>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">随着博客的积累，上传的图片和其他文件会占用服务器很多空间。博客的响应速度可能就会变慢，而我们可以将这些静态资源放在“CDN云存储服务器”上面，CDN 加速优点是成本低，速度快，适合访问量比较大的网站。这样既可以实现网站的瘦身，也能够提高响应的速度。</span></p>
+<h2><span style="font-family: terminal, monaco, monospace;">2、七牛云</span></h2>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="231" data-permalink="https://zhaoshuai.me/wordpress-qiniu-cdn/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/wordpress-qiniu-cdn.gif" data-orig-size="716,297" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="wordpress-qiniu-cdn" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/wordpress-qiniu-cdn.gif" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/wordpress-qiniu-cdn.gif" class="aligncenter size-full wp-image-231" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/wordpress-qiniu-cdn.gif" alt="" width="716" height="297" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">推荐七牛云的原因：</span></p>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">安全性能：为用户数据创建至少三个副本并跨IDC存储到多个数据中心，同时支持防盗链设置；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">数据存储：支持图片、音频、视频、JS、CSS等多种静态文件的存储，并支持断点续传；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">云端加速：七牛的500多个加速节点遍布全球，会自动选择离用户最近的节点，并实现数据上传下载的双向加速；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">数据处理：支持云端在线压缩、裁剪等图片处理及音频、视频格式转换，还可在线进行视频截图；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">开发合作：为开发者提供了多种接入工具及丰富的开发包，提供API、SDK教程示例；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">域名绑定：已备案的网站可申请绑定自己的域名，未备案的用户可使用七牛的二级域名绑定；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">镜像功能：通过一定的设置，可自动将网站原有图片等静态文件镜像到七牛，而无需重新上传到七牛服务器；</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">外链分享：由于七牛云支持外链，可以将文件上传至七牛，直接利用文件链接地址作外链调用。</span></li>
+</ul>
+<h4><span style="font-family: terminal, monaco, monospace;">2.1、创建对象存储空间</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">登录-&gt;管理控制台-&gt;对象存储-&gt;新建存储空间-&gt;填写信息</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="137" data-permalink="https://zhaoshuai.me/3e52067187c0ffbc965f12c07d8e336f/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/3E52067187C0FFBC965F12C07D8E336F.jpg" data-orig-size="1010,585" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="3E52067187C0FFBC965F12C07D8E336F" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/3E52067187C0FFBC965F12C07D8E336F.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/3E52067187C0FFBC965F12C07D8E336F.jpg" class="aligncenter size-full wp-image-137" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/3E52067187C0FFBC965F12C07D8E336F.jpg" alt="" width="1010" height="585" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">示例，空间的名称为blog：</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="138" data-permalink="https://zhaoshuai.me/d8edbd2ffe4b45c69c490a246bfeb6e7/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D8EDBD2FFE4B45C69C490A246BFEB6E7.jpg" data-orig-size="1263,585" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="D8EDBD2FFE4B45C69C490A246BFEB6E7" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D8EDBD2FFE4B45C69C490A246BFEB6E7.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D8EDBD2FFE4B45C69C490A246BFEB6E7.jpg" class="aligncenter size-full wp-image-138" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D8EDBD2FFE4B45C69C490A246BFEB6E7.jpg" alt="" width="1263" height="585" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace;">2.2、绑定域名</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">接下来我们需要绑定一个CDN的域名，（1）在你创建存储空间的时候会自动分配一个不规则的域名，（2）如果自己的域名是已经备案过了，我们可以使用CNAME，创建自定义的CDN域名。</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><em><strong>示例：qiniu.zhaoshuai.me</strong></em></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="140" data-permalink="https://zhaoshuai.me/f2aab5a109c8625123b3266897ed477c/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/F2AAB5A109C8625123B3266897ED477C.jpg" data-orig-size="1120,596" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="F2AAB5A109C8625123B3266897ED477C" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/F2AAB5A109C8625123B3266897ED477C.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/F2AAB5A109C8625123B3266897ED477C.jpg" class="aligncenter size-full wp-image-140" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/F2AAB5A109C8625123B3266897ED477C.jpg" alt="" width="1120" height="596" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">在通信协议这里：</span></p>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">如果你的博客域名没有申请SSL证书，即不支持HTTPS协议，那就选HTTP就好。</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">由于本站加了SSL证书（<a href="https://zhaoshuai.me/2018-09-28/" target="_blank" rel="noopener">【Nginx】域名添加 https 证书</a>），我们就要选择HTTPS。另外，在下图我们可以看到，需要们选择一个相对应的SSL证书，点击 <span style="color: #0000ff;"><em><a href="https://portal.qiniu.com/certificate/ssl" target="_blank" rel="noopener">SSL证书管理</a> </em></span> 申请（下面我们会进行介绍）：</span></li>
+</ul>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="145" data-permalink="https://zhaoshuai.me/0080690c037b47723555332ad592a643/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/0080690C037B47723555332AD592A643.jpg" data-orig-size="899,585" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="0080690C037B47723555332AD592A643" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/0080690C037B47723555332AD592A643.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/0080690C037B47723555332AD592A643.jpg" class="aligncenter size-full wp-image-145" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/0080690C037B47723555332AD592A643.jpg" alt="" width="899" height="585" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">源站配置选择 之前创建的空间的名字就可以:</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="144" data-permalink="https://zhaoshuai.me/23b97fdfd13887e14c9648ffab81b306/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23B97FDFD13887E14C9648FFAB81B306.jpg" data-orig-size="930,572" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="23B97FDFD13887E14C9648FFAB81B306" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23B97FDFD13887E14C9648FFAB81B306.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23B97FDFD13887E14C9648FFAB81B306.jpg" class="aligncenter size-full wp-image-144" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23B97FDFD13887E14C9648FFAB81B306.jpg" alt="" width="930" height="572" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">其他高级设置，如果有需要可以自定义设置，然后点击创建，可以在域名管理里面看见刚刚创建的域名：</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="148" data-permalink="https://zhaoshuai.me/625e242db78514d7ad55d5214ef17b69/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/625E242DB78514D7AD55D5214EF17B69.jpg" data-orig-size="1259,373" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="625E242DB78514D7AD55D5214EF17B69" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/625E242DB78514D7AD55D5214EF17B69.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/625E242DB78514D7AD55D5214EF17B69.jpg" class="aligncenter size-full wp-image-148" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/625E242DB78514D7AD55D5214EF17B69.jpg" alt="" width="1259" height="373" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace;">2.3、SSL证书申请</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">上述步骤，我们选择了HTTPS通信协议，需要我们申请一个证书。很简单。</span></p>
+<h4><span style="font-family: terminal, monaco, monospace; font-size: 12pt;">SSL证书服务-&gt;购买证书：</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">选择一个免费的，提交即可</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="149" data-permalink="https://zhaoshuai.me/23d04354e3b1ace23c801e18fb309ba3/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23D04354E3B1ACE23C801E18FB309BA3.jpg" data-orig-size="752,591" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="23D04354E3B1ACE23C801E18FB309BA3" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23D04354E3B1ACE23C801E18FB309BA3.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23D04354E3B1ACE23C801E18FB309BA3.jpg" class="aligncenter size-full wp-image-149" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/23D04354E3B1ACE23C801E18FB309BA3.jpg" alt="" width="752" height="591" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace; font-size: 12pt;">SSL证书服务-&gt;补全信息-&gt;提交</span></h4>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">域名（通用名称），示例：qiniu.zhaoshuai.me</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">证书备注：博客</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">验证方式：DNS验证</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">加密算法：RSA</span></li>
+</ul>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="152" data-permalink="https://zhaoshuai.me/455099083019c787faf6fff4b8e318a6/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/455099083019C787FAF6FFF4B8E318A6.jpg" data-orig-size="954,710" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="455099083019C787FAF6FFF4B8E318A6" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/455099083019C787FAF6FFF4B8E318A6.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/455099083019C787FAF6FFF4B8E318A6.jpg" class="aligncenter size-full wp-image-152" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/455099083019C787FAF6FFF4B8E318A6.jpg" alt="" width="954" height="710" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace; font-size: 12pt;">SSL证书服务-&gt;证书管理-&gt;详情-&gt;DNS验证</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">在证书管理，找到自己申请的证书，点击最右侧详情。</span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">域名所有权验证，DNS（TXT）-&gt; <a href="https://developer.qiniu.com/ssl/manual/3667/ssl-certificate-of-free-dns-validation-guide" target="_blank" rel="noopener">免费证书验证指南</a></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="155" data-permalink="https://zhaoshuai.me/6dc6a30497c3e56d57ac0954e5039949/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/6DC6A30497C3E56D57AC0954E5039949.jpg" data-orig-size="1153,540" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="6DC6A30497C3E56D57AC0954E5039949" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/6DC6A30497C3E56D57AC0954E5039949.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/6DC6A30497C3E56D57AC0954E5039949.jpg" class="aligncenter size-full wp-image-155" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/6DC6A30497C3E56D57AC0954E5039949.jpg" alt="" width="1153" height="540" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">配置成功之后，等待一段时间就会看到自己的证书已经完成验证，可以使用了。之后在绑定域名的时候，就可以看到相对应的SSL证书。</span></p>
+<h2><span style="font-family: terminal, monaco, monospace;">3、Wordpress插件</span></h2>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">下载三个插件：</span></p>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><strong>WP Super Cache</strong></span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><strong>WPJAM BASIC</strong></span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><strong>WPJAM 七牛镜像存储</strong></span></li>
+</ul>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="163" data-permalink="https://zhaoshuai.me/4d05874ac262d1bc309677454b223507/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/4D05874AC262D1BC309677454B223507.jpg" data-orig-size="1121,231" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="4D05874AC262D1BC309677454B223507" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/4D05874AC262D1BC309677454B223507.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/4D05874AC262D1BC309677454B223507.jpg" class="aligncenter size-full wp-image-163" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/4D05874AC262D1BC309677454B223507.jpg" alt="" width="1121" height="231" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace;">3.1 WPJAM BASIC 配置</span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">在配置中，打开七牛镜像云存储：<img data-attachment-id="158" data-permalink="https://zhaoshuai.me/474913fd840fbb21950372708a44d4e8/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/474913FD840FBB21950372708A44D4E8.jpg" data-orig-size="886,515" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="474913FD840FBB21950372708A44D4E8" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/474913FD840FBB21950372708A44D4E8.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/474913FD840FBB21950372708A44D4E8.jpg" class="aligncenter size-full wp-image-158" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/474913FD840FBB21950372708A44D4E8.jpg" alt="" width="886" height="515" /></span></p>
+<h4><span style="font-family: terminal, monaco, monospace;"><span style="font-size: 10pt;">3.2 </span>WPJAM 七牛镜像存储配置</span></h4>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">七牛域名，示例：https://qiniu.zhaoshuai.me/</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">七牛空间名，创建的空间名字， 示例：blog</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">ACCESS KEY &amp; SECRET KEY， 七牛云-&gt;个人面板-&gt;<a href="https://portal.qiniu.com/user/key" target="_blank" rel="noopener">密钥管理</a>（选择其中一对即可）</span></li>
+</ul>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="159" data-permalink="https://zhaoshuai.me/31039234a063d7358fd138f2b3a0ff36/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/31039234A063D7358FD138F2B3A0FF36.jpg" data-orig-size="836,454" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="31039234A063D7358FD138F2B3A0FF36" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/31039234A063D7358FD138F2B3A0FF36.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/31039234A063D7358FD138F2B3A0FF36.jpg" class="aligncenter size-full wp-image-159" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/31039234A063D7358FD138F2B3A0FF36.jpg" alt="" width="836" height="454" /></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">登陆 wordpress 仪表盘后，在浏览器中输入：<em><code></code></em></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;"><em><code>https://{自己域名}/wp-admin/options.php</code></em></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">使用Ctrl+F命令找到 upload_url_path 选项，在其中输入:<em><code></code></em></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;"><em><code>https://{七牛域名}/wp-content/uploads</code></em> </span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">注意！！后面一定不要加"/", 示例 ：</span></p>
+<blockquote><p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><code>https://qiniu.zhaoshuai.me/wp-content/uploads</code></span></p></blockquote>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;"><img data-attachment-id="164" data-permalink="https://zhaoshuai.me/7fa3b198680a1c54a63f4d3fe1e72a6e/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/7FA3B198680A1C54A63F4D3FE1E72A6E.jpg" data-orig-size="836,109" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="7FA3B198680A1C54A63F4D3FE1E72A6E" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/7FA3B198680A1C54A63F4D3FE1E72A6E.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/7FA3B198680A1C54A63F4D3FE1E72A6E.jpg" class="aligncenter size-full wp-image-164" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/7FA3B198680A1C54A63F4D3FE1E72A6E.jpg" alt="" width="836" height="109" /></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">记得点击保存，然后我们再看媒体库中的所有的图片的链接格式都已经更改了。改成了刚刚更改的URL前缀。</span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">然后我们再去七牛云对应的存储空间上去看，发现博客的图片都已经同步过去了：</span></p>
+<p><span style="font-family: terminal, monaco, monospace;"><img data-attachment-id="168" data-permalink="https://zhaoshuai.me/d47f1d3a346c5b4462d08c4ef8f19b88/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D47F1D3A346C5B4462D08C4EF8F19B88.jpg" data-orig-size="1034,540" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="D47F1D3A346C5B4462D08C4EF8F19B88" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D47F1D3A346C5B4462D08C4EF8F19B88.jpg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D47F1D3A346C5B4462D08C4EF8F19B88.jpg" class="aligncenter size-full wp-image-168" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/D47F1D3A346C5B4462D08C4EF8F19B88.jpg" alt="" width="1034" height="540" /></span></p>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">之后再新上传的照片也会自动同步到七牛上，此方法的好处在于你只需在wordpress中上传图片，就会自动同步到七牛空间，而无需登陆七牛上传并手动输入图片地址了。并且除了图片地址改变外，其他操作如常。引用图片时会自动加载七牛空间中的图片，实现 wordpress 免费CDN全网加速。不便之处是上传的图片仍会在 wordpress 空间中保留，占用空间容量。也就是说，它仍然在你的本地保存了一份，不过访问时会访问七牛的网址，也就可以实现CDN加速，而且为你的主机节省流量了。当然，由于图片已同步至七牛镜像空间中，你也可以选择删除 wordpress 中的图片。</span></p>
+<h4><span style="font-family: terminal, monaco, monospace;"><span style="font-size: 10pt;">3.3 </span>W<strong>P Super Cache 配置</strong></span></h4>
+<p><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">wordpress仪表盘 -&gt; Settings -&gt; WP Super Cache </span></p>
+<ul>
+<li><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">站点地址（URL）, 示例：https://zhaoshuai.me</span></li>
+<li><span style="font-family: terminal, monaco, monospace; font-size: 10pt;">Off-site URL，七牛域名，示例：https://qiniu.zhaoshuai.me</span></li>
+</ul>
+<p><span style="font-family: terminal, monaco, monospace;"><img data-attachment-id="170" data-permalink="https://zhaoshuai.me/ac076235-447e-4e9d-8700-824c2044092b/" data-orig-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/AC076235-447E-4E9D-8700-824C2044092B.jpeg" data-orig-size="866,915" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="AC076235-447E-4E9D-8700-824C2044092B" data-image-description="" data-medium-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/AC076235-447E-4E9D-8700-824C2044092B.jpeg" data-large-file="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/AC076235-447E-4E9D-8700-824C2044092B.jpeg" class="aligncenter size-full wp-image-170" src="https://qiniu.zhaoshuai.me/wp-content/uploads/2018/10/AC076235-447E-4E9D-8700-824C2044092B.jpeg" alt="" width="866" height="915" /></span></p>
+<p><span style="font-size: 10pt; font-family: terminal, monaco, monospace;">保存修改，这样就能够实现CDN加速了。</span></p>
+<p><span style="font-family: terminal, monaco, monospace;">通过上述步骤，就可以将我们的博客部署到七牛云存储上，并实现了HTTPS加密保证安全，既可以提高网站加载速度，同时也节省我们的主机流量。</span></p>
+<p><span style="font-family: terminal, monaco, monospace;">如果有什么不正确或者不完善的地方，欢迎留言~</span></p>
+<h2><span style="font-family: terminal, monaco, monospace;">4、参考博文：</span></h2>
+<ul>
+<li><span style="font-family: terminal, monaco, monospace;">https://wordpress.org/plugins/wpjam-qiniu/</span></li>
+<li><span style="font-family: terminal, monaco, monospace;">https://cuiqingcai.com/357.html</span></li>
+</ul>
+<p>&nbsp;</p>
+</div>
+                                    </div>
+
+        <div class="mod-post__meta">
+            <div>
+                <div>— 于
+                    <time datetime="2018年10月06日 04:00:08">2018年10月06日</time>
+                    ，<span>共写了2231个字</span>；
+                </div>
+                <div>— 文内使用到的标签：<span class="mod_tag"><a href="https://zhaoshuai.me/tag/wordpress/" rel="tag">Wordpress</a></span></div>
+            </div>
+        </div>
+        <ul class="sxwk">
+            <li></li>
+            <li>上一篇：<a href="https://zhaoshuai.me/2018-10-08/" rel="next">【WordPress】获取作者信息的函数</a></li>
+        </ul>
+    </article>
+    <section class="mod-comment">
+        
+<!-- You can start editing here. -->
+
+	<h3 id="comments">
+		2条回应：&#8220;【WordPress】博客+七牛云+CDN+SSL证书&#8221;	</h3>
+
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+
+	<ol class="commentlist">
+			<li class="comment even thread-even depth-1 parent" id="comment-12">
+				<div id="div-comment-12" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/33ac706e1851fecea2f32e2275599691?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/33ac706e1851fecea2f32e2275599691?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn"><a href='http://wu' rel='external nofollow' class='url'>wayne</a></cite><span class="says">说道：</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://zhaoshuai.me/2018-10-01/#comment-12">
+			2018年11月30日 上午11:50				</a>
+						</div>
+
+		<p>插个眼</p>
+
+		<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/2018-10-01/?replytocom=12#respond' data-commentid="12" data-postid="127" data-belowelement="div-comment-12" data-respondelement="respond" aria-label='回复给wayne'>回复</a></div>
+				</div>
+				<ul class="children">
+		<li class="comment byuser comment-author-zhaoshuai bypostauthor odd alt depth-2" id="comment-24">
+				<div id="div-comment-24" class="comment-body">
+				<div class="comment-author vcard">
+			<img alt='' src='https://secure.gravatar.com/avatar/256c88fc2de20125bfaf6a16c3c9f6f3?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/256c88fc2de20125bfaf6a16c3c9f6f3?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' />			<cite class="fn">zhaoshuai</cite><span class="says">说道：</span>		</div>
+		
+		<div class="comment-meta commentmetadata"><a href="https://zhaoshuai.me/2018-10-01/#comment-24">
+			2019年5月13日 上午11:13				</a>
+						</div>
+
+		<p>欢迎~~</p>
+
+		<div class="reply"><a rel='nofollow' class='comment-reply-link' href='/2018-10-01/?replytocom=24#respond' data-commentid="24" data-postid="127" data-belowelement="div-comment-24" data-respondelement="respond" aria-label='回复给zhaoshuai'>回复</a></div>
+				</div>
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	</ol>
+
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2018-10-01/#respond" style="display:none;">取消回复</a></small></h3>			<form action="https://zhaoshuai.me/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+				<p class="comment-notes"><span id="email-notes">电子邮件地址不会被公开。</span> 必填项已用<span class="required">*</span>标注</p><p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">姓名 <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">电子邮件 <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">站点</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /><label for="wp-comment-cookies-consent">在此浏览器中保存我的名字、电邮和网站。</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="发表评论" /> <input type='hidden' name='comment_post_ID' value='127' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8d273cf799" /></p><p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="97"/></p>			</form>
+			</div><!-- #respond -->
+	    </section>
+<footer class="mod-footer mod-footer-single" role="contentinfo" id="footer_in" style="text-align: center;">
+    <p class="f_bq">
+        Copyright ©
+        2019 碎念 Powered by <a class="banquan" target="_blank" href="http://www.2zzt.com">WordPress</a>    </p>
+
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cspan id='cnzz_stat_icon_1260972202'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1260972202%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</footer>
+<link rel='stylesheet' id='crayon-css'  href='https://qiniu.zhaoshuai.me/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=_2.7.2_beta' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='https://qiniu.zhaoshuai.me/wp-content/plugins/jetpack/css/jetpack.css?ver=7.3.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/zhaoshuai.me\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=_2.7.2_beta'></script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-content/plugins/jetpack/_inc/build/spin.min.js?ver=1.3'></script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-content/plugins/jetpack/_inc/build/jquery.spin.min.js?ver=1.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"zh","ajaxurl":"https:\/\/zhaoshuai.me\/wp-admin\/admin-ajax.php","nonce":"137812a5ae","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"\u6761\u8bc4\u8bba","post_comment":"\u53d1\u8868\u8bc4\u8bba","write_comment":"\u64b0\u5199\u8bc4\u8bba...","loading_comments":"\u6b63\u5728\u52a0\u8f7d\u8bc4\u8bba...","download_original":"\u67e5\u770b\u5168\u5c3a\u5bf8 <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"\u8bf7\u786e\u4fdd\u4e0e\u60a8\u7684\u8bc4\u8bba\u4e00\u8d77\u63d0\u4ea4\u90e8\u5206\u6587\u672c\u3002","no_comment_email":"\u8bf7\u63d0\u4f9b\u7528\u4e8e\u53d1\u8868\u8bc4\u8bba\u7684\u7535\u5b50\u90ae\u4ef6\u5730\u5740\u3002","no_comment_author":"\u8bf7\u63d0\u4f9b\u60a8\u7528\u4e8e\u53d1\u8868\u8bc4\u8bba\u7684\u59d3\u540d\u3002","comment_post_error":"\u62b1\u6b49\uff0c\u53d1\u8868\u60a8\u7684\u8bc4\u8bba\u65f6\u51fa\u9519\u3002\u8bf7\u7a0d\u540e\u91cd\u8bd5\u3002","comment_approved":"\u60a8\u7684\u8bc4\u8bba\u5df2\u83b7\u5f97\u6279\u51c6\u3002","comment_unapproved":"\u6b63\u5728\u5ba1\u6838\u60a8\u7684\u8bc4\u8bba\u3002","camera":"\u7167\u76f8\u673a","aperture":"\u5149\u5708","shutter_speed":"\u5feb\u95e8\u901f\u5ea6","focal_length":"\u7126\u8ddd","copyright":"\u7248\u6743","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/zhaoshuai.me\/wp-login.php?redirect_to=https%3A%2F%2Fzhaoshuai.me%2F2018-10-01%2F","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">\u7535\u5b50\u90ae\u7bb1\uff08\u5fc5\u586b\uff09<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">\u540d\u79f0\uff08\u5fc5\u586b\uff09<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">\u7f51\u5740<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-content/plugins/jetpack/_inc/build/carousel/jetpack-carousel.min.js?ver=20190102'></script>
+<script type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-includes/js/comment-reply.min.js?ver=5.2'></script>
+<script async="async" type='text/javascript' src='https://qiniu.zhaoshuai.me/wp-content/plugins/akismet/_inc/form.js?ver=4.1.2'></script>
+<script type='text/javascript' src='https://stats.wp.com/e-201920.js' async='async' defer='defer'></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:7.3.1',blog:'162214732',post:'127',tz:'8',srv:'zhaoshuai.me'} ]);
+	_stq.push([ 'clickTrackerInit', '162214732', '127' ]);
+</script>
+</body></html>
