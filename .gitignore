@@ -1,1 +1,4 @@
 wp-content/cache/supercache/*
+wp-content/uploads/
+wp-content/cache/
+.idea/*
