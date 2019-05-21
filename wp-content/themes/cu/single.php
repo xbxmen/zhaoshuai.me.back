@@ -53,7 +53,7 @@
             </div>
 
             <div class="single-header-bar">
-                <img class="single" src="<?php bloginfo('template_url'); ?>/images/comment.png">
+                <img class="single" src="<?php bloginfo('template_url'); ?>/images/pageview.png">
                 <span class="single-header-span">
                     <?php if(function_exists('the_views')) { the_views(); } ?>
                 </span>
