@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" media="screen" type="text/css"/>
     <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/images/favicon.ico" type="image/x-icon"/>
     <?php
-    if (is_singular() && get_option('thread_comments')) wp_enqueue_script('comment-reply');
+    if (is_singular() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
     wp_enqueue_script('jquery');
     wp_head();
     ?>

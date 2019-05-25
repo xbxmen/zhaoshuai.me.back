@@ -233,7 +233,8 @@ blockquote {
 
 @media screen and (max-width: 500px) {
     .mod-head {
-        margin-bottom: 40px
+        margin-bottom: 40px;
+        padding-top : 0;
     }
 
     .mod-head__ul {
@@ -426,17 +427,14 @@ blockquote {
 }
 
 .page-content {
-    margin-left: 23.5%;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .mod-comment {
     animation: fade-in;
     animation-duration: 3s;
     -webkit-animation: fade-in 3s;
-}
-
-.page-comment {
-    margin-left: 15%;
 }
 
 .up {

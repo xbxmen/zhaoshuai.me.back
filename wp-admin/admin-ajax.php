@@ -156,6 +156,48 @@ add_action( 'wp_ajax_nopriv_heartbeat', 'wp_ajax_nopriv_heartbeat', 1 );
 
 $action = ( isset( $_REQUEST['action'] ) ) ? $_REQUEST['action'] : '';
 
+// 文章搜索
+function search()
+{
+    $keyword = $_GET['keyword'] ?? $_GET['keyword'];
+    header("Content -Type: application/json");
+    if (empty($keyword)) {
+        echo $response = (json_encode([], JSON_UNESCAPED_UNICODE));
+        wp_die();
+    }
+    $args     = [
+        'posts_per_page'      => -1,
+        'ignore_sticky_posts' => 1,
+        'post_type'           => 'post',
+        'post_status'         => 'publish',
+    ];
+    $result   = new WP_Query($args);
+    $articles = [];
+    if ($result->have_posts()) {
+        while ($result->have_posts()) {
+            $result->the_post();
+
+            global $post;
+            $post_title = get_the_title();
+            if (mb_stripos($post_title, $keyword)) {
+                $articles[] = [
+                    'id'         => get_the_ID(),
+                    'post_name'  => $post->post_name,
+                    'post_title' => $post_title,
+                    'post_date'  => $post->post_date,
+                ];
+            }
+        }
+    }
+
+    wp_reset_query();
+    echo $response = (json_encode($articles, JSON_UNESCAPED_UNICODE));
+    wp_die();
+}
+
+add_action( 'wp_ajax_nopriv_search', 'search' );
+add_action( 'wp_ajax_search', 'search' );
+
 if ( is_user_logged_in() ) {
 	// If no action is registered, return a Bad Request response.
 	if ( ! has_action( "wp_ajax_{$action}" ) ) {
@@ -187,5 +229,6 @@ if ( is_user_logged_in() ) {
 	 */
 	do_action( "wp_ajax_nopriv_{$action}" );
 }
+
 // Default status
 wp_die( '0' );
