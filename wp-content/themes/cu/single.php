@@ -55,7 +55,7 @@
             <div class="single-header-bar">
                 <img class="single" src="<?php bloginfo('template_url'); ?>/images/pageview.png">
                 <span class="single-header-span">
-                    <?php if(function_exists('the_views')) { the_views(); } ?>
+                    <?php echo getPostViews(get_the_ID()); ?>
                 </span>
             </div>
         </div>
@@ -63,6 +63,7 @@
         <div>
             <?php while (have_posts()): the_post();
                 $p_id = get_the_ID(); ?>
+                <?php setPostViews(get_the_ID()); ?>
                 <div class="mod-post__entry wzulli"><?php the_content(); ?></div>
                 <?php wp_link_pages('before=<div class="posts-nav"><span> — 文章分页：</span>&after=</div>'); ?>
             <?php endwhile; ?>

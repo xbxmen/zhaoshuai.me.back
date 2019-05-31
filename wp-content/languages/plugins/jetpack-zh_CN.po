@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - Jetpack by WordPress.com - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2019-05-21 03:54:30+0000\n"
+"PO-Revision-Date: 2019-05-28 16:54:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1338,6 +1338,18 @@ msgstr "定制您的消息"
 msgid "Share this post"
 msgstr "共享此文章"
 
+#: _inc/blocks/editor-beta.js:24 _inc/blocks/editor.js:12
+#: extensions/blocks/contact-info/index.js:38
+msgctxt "block search term"
+msgid "address"
+msgstr "地址"
+
+#: _inc/blocks/editor-beta.js:24 _inc/blocks/editor.js:12
+#: extensions/blocks/contact-info/index.js:37
+msgctxt "block search term"
+msgid "phone"
+msgstr "电话"
+
 #: jetpack.php:86
 msgid "Jetpack requires a more recent version of WordPress and has been paused. Please update WordPress to continue enjoying Jetpack."
 msgstr "Jetpack 要求使用更新版本的 WordPress，现已暂停服务。请更新 WordPress，继续畅享 Jetpack。"
@@ -1385,6 +1397,22 @@ msgstr "无法识别指定的对象_类型"
 #: json-endpoints/jetpack/class.jetpack-json-api-get-database-object-backup-endpoint.php:51
 msgid "You must specify both an object type and id to fetch"
 msgstr "您必须指定要获取的对象类型和 ID"
+
+#: json-endpoints/jetpack/class.jetpack-json-api-jps-woocommerce-connect-endpoint.php:53
+msgid "site_id is required"
+msgstr "需要 site_id"
+
+#: json-endpoints/jetpack/class.jetpack-json-api-jps-woocommerce-connect-endpoint.php:45
+msgid "access_token_secret is required"
+msgstr "需要 access_token_secret"
+
+#: json-endpoints/jetpack/class.jetpack-json-api-jps-woocommerce-connect-endpoint.php:41
+msgid "access_token is required"
+msgstr "需要 access_token"
+
+#: json-endpoints/jetpack/class.jetpack-json-api-jps-woocommerce-connect-endpoint.php:14
+msgid "WooCommerce auth data is already set."
+msgstr "已设置 WooCommerce 身份验证数据。"
 
 #. translators: the placeholder is a URL
 #: class.jetpack-cli.php:1786
@@ -2150,6 +2178,12 @@ msgstr "Google 会通过电子邮件发送您的站点上发生的特定事件�
 msgid "or"
 msgstr "或"
 
+#: _inc/lib/core-api/wpcom-fields/post-fields-publicize-connections.php:121
+#: _inc/lib/core-api/wpcom-endpoints/publicize-connections.php:177
+#: _inc/lib/core-api/wpcom-endpoints/publicize-services.php:150
+msgid "Sorry, Publicize is not available on your site right now."
+msgstr "抱歉，您的站点目前不能使用 Publicize。"
+
 #: _inc/jetpack-strings.php:605
 msgid "Jetpack is ready for the new WordPress editor"
 msgstr "Jetpack 已为新的 WordPress 编辑器做好准备"
@@ -2217,6 +2251,10 @@ msgstr "创建帐户"
 #: _inc/jetpack-strings.php:529
 msgid "Jetpack is powering your site, but to access all of its features you’ll need to create an account."
 msgstr "Jetpack 正在为您的站点提供支持，但您将需要创建帐户才能访问其全部功能。"
+
+#: _inc/jetpack-strings.php:538
+msgid "This site can't be connected to WordPress.com because it violates our {{a}}Terms of Service{{/a}}."
+msgstr "此站点违反了我们的{{a}}服务条款{{/a}}，因此无法连接到 WordPress.com。"
 
 #: _inc/jetpack-strings.php:485
 msgctxt "Navigation item. Noun. Links to a list of modules for Jetpack."
@@ -2309,6 +2347,10 @@ msgstr "Jetpack 根据您的站点自动生成自定义 {{link}}ads.txt{{/link}}
 msgid "Custom ads.txt entries"
 msgstr "自定义 ads.txt 条目"
 
+#: _inc/jetpack-strings.php:334
+msgid "Connect your website to the social media networks you use and share your content across all your social accounts with a single click. When you publish a post, it will appear on all connected accounts."
+msgstr "只需点击一下，即可将您的网站连接到您使用的社交媒体网络，并在您的所有社交帐户中共享内容。在您发布文章时，文章会出现在所有关联的帐户中。"
+
 #: _inc/jetpack-strings.php:331
 msgid "Create a Jetpack account to use this feature"
 msgstr "创建 Jetpack 帐户即可使用此功能"
@@ -2320,6 +2362,14 @@ msgstr "在社交媒体上分享内容，并提高观众参与度。"
 #: _inc/jetpack-strings.php:319
 msgid "Add an extra layer of security to your website by enabling WordPress.com log in and secure authentication. If you have multiple sites with this option enabled, you will be able to log into every one of them with the same credentials."
 msgstr "启用 WordPress.com 登录和安全认证，为您的网站添加额外的安全保护。如果您有多个站点已启用此选项，您将能够使用相同的凭证登录每个站点。"
+
+#: _inc/jetpack-strings.php:329
+msgid "Add Like buttons to your posts and pages"
+msgstr "在文章和页面中添加“赞”按钮"
+
+#: _inc/jetpack-strings.php:328
+msgid "When visitors enjoy your content, let them show it with a Like."
+msgstr "如果访客喜欢您的内容，让他们可以通过点赞来表达喜爱。"
 
 #: _inc/jetpack-strings.php:309
 msgid "Jetpack will continuously monitor your site, and alert you the moment downtime is detected."
@@ -2823,6 +2873,25 @@ msgstr "正在激活"
 msgid "You can verify your site using the <a href=\"%s\">\"Site verification\" tool in Jetpack Settings</a>."
 msgstr "可以使用<a href=\"%s\">“Jetpack 设置”中的“站点验证”工具</a>来验证您的站点。"
 
+#: modules/copy-post.php:304
+msgid "Copy"
+msgstr "复制"
+
+#: modules/copy-post.php:303
+msgid "Copy this post."
+msgstr "复制此文章。"
+
+#: modules/sharedaddy/sharing-sources.php:282
+#: modules/sharedaddy/sharing-sources.php:425
+msgid "%1$s has shut down"
+msgstr "%1$s已关闭"
+
+#: modules/sharedaddy/sharing-sources.php:277
+#: modules/sharedaddy/sharing-sources.php:426
+#: modules/sharedaddy/sharing.php:180
+msgid "The %1$s service has shut down. This sharing button is not displayed to your visitors and should be removed."
+msgstr "%1$s服务已关闭。此共享按钮不会向访客显示，并应将其删除。"
+
 #: modules/module-headings.php:176
 msgctxt "Module Description"
 msgid "Generates shorter links so you can have more space to write on social media sites."
@@ -2910,6 +2979,15 @@ msgid ""
 msgstr ""
 "我们的资产内容分发网络是一项站点加速服务。\n"
 "\t\t这意味着我们可以托管服务器上的 WordPress 核心和 Jetpack 随附的 JavaScript 和层叠样式表等静态资产，从而减轻服务器的负担。"
+
+#: modules/module-headings.php:36
+msgctxt "Module Name"
+msgid "Copy Post"
+msgstr "复制文章"
+
+#: modules/module-info.php:912
+msgid "Create a new post based on an existing post."
+msgstr "根据现有文章创建新文章。"
 
 #: modules/module-info.php:873
 msgid "Speed up and improve the reliability of your site using the latest in web technology."
@@ -3116,6 +3194,10 @@ msgstr "未找到站点地图。系统将在 %s 后再次尝试创建。"
 #: modules/sitemaps/sitemap-builder.php:153
 msgid "Jetpack can not load necessary XML manipulation libraries. Please ask your hosting provider to refer to our server requirements at https://jetpack.com/support/server-requirements/ ."
 msgstr "Jetpack 无法加载必要的 XML 操作库。请让您的托管服务提供商参考我们的服务器要求，网址为 https://jetpack.com/support/server-requirements/。"
+
+#: modules/publicize/publicize.php:511
+msgid "Please select a Facebook Page to publish updates."
+msgstr "请选择要发布更新的 Facebook 页面。"
 
 #: modules/widgets/blog-stats.php:153
 msgid "There was an issue retrieving stats. Please try again later."
